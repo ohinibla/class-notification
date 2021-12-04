@@ -1,0 +1,23 @@
+html, body {
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.button {
+    margin: 3% auto;
+    padding: 4px;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+  .class-name:hover {
+    background-color: #CFF2F2;
+  }
+  
+  .class-name {
+    background-color: #E5F2F2;
+  }
