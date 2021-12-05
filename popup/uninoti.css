@@ -1,6 +1,6 @@
-html, body {
+/* html, body {
     width: 100%;
-}
+} */
 
 .hidden {
     display: none;
@@ -14,10 +14,6 @@ html, body {
     cursor: pointer;
   }
   
-  .class-name:hover {
-    background-color: #CFF2F2;
-  }
-  
   .class-name {
-    background-color: #E5F2F2;
+    text-align: center;
   }

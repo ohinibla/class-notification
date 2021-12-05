@@ -37,10 +37,12 @@ function ListenForClicks() {
  */
 function listClassNames(message) {
     for (let ClassName of message.class_names) {
-        let ClassBtn = document.create("button");
-        ClassBtn.className = "class-name";
-        ClassBtn.innerText = ClassName;
-        document.getElementById("popup-content")[0].appendChild(ClassBtn);
+        let Classdiv = document.createElement("div")
+        let ClassBtn = document.createElement("button");
+        Classdiv.className = "class-name";
+        ClassBtn.textContent = ClassName;
+        Classdiv.appendChild(ClassBtn);
+        document.getElementById("popup-content").appendChild(Classdiv);
     }
 }
 
@@ -60,7 +62,6 @@ function reportExecuteScriptError(error) {
  * If we couldn't inject the script, handle the error.
  */
 
-browser.runtime.onMessage.addListener(listClassNames);
-browser.tabs.executeScript({file: "/content_scripts/uninoti.js"})
-.then(ListenForClicks)
-.catch(reportExecuteScriptError);
+console.log('executing popup script');
+browser.tabs.executeScript({file: "/content_scripts/uninoti.js"});
+browser.runtime.onMessage.addListener(listClassNames)
