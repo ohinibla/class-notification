@@ -10,16 +10,17 @@
     },
 
     "permissions": [
-      "activeTab",
       "notifications"
     ],
 
-    "browser_action": {
-      "default-icon": "icons/uninoti-32.png",
-      "default_title": "uninoti",
-      "default_popup": "popup/uninoti.html"
+    "background": {
+      "scripts": ["background-script.js"]
     },
-    
-    "web_accessible_resources": []
 
+    "content_scripts": [
+      {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"]
+      }
+    ]
   }
