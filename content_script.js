@@ -1,14 +1,14 @@
+var selected = false;
+
 /**
  * Adds custom notification button to every examBox > BtnHolder.
  */
-function addCustomButton() {
-    let exam_boxes = document.querySelectorAll(".examBox");
-
+function addCustomButtons(exam_boxes, _color) {
     for (let box of exam_boxes) {
         let CustomButton = document.createElement("a");
         CustomButton.classList.add("notification-button");
         CustomButton.classList.add("btn", "examBtn", "contentBtn");
-        CustomButton.style.backgroundColor = "red";
+        CustomButton.style.backgroundColor = _color;
         CustomButton.textContent = "ورود استاد را به من اطلاع بده";
         box.getElementsByClassName("btnHolder")[0].prepend(CustomButton);
     }
@@ -35,9 +35,11 @@ function selectbtn(e) {
 function sendSelectedClass() {
     document.querySelectorAll(".notification-button").forEach(item => {
         item.addEventListener("click", (e) => {
-            let class_title = e.target.parentNode.parentNode.getElementsByTagName('h4')[0].textContent;
-            browser.runtime.sendMessage({"selected_class": class_title,});
+            let selected_class_box = e.target.parentNode.parentNode;
+            let selected_class_title = selected_class_box.getElementsByTagName('h4')[0].textContent;
+            myPort.postMessage({selected_class: selected_class_title, selected: true});
             selectbtn(e);
+            selected = true;
         })
     })
 };
@@ -49,6 +51,15 @@ function sendSelectedClass() {
 function getClassEnterbtn(class_title) {
     return document.getElementsByClassName("selected-class")[0].parentNode.lastElementChild.textContent;
 };
+
+function getClassexamBox(class_title) {
+    let exam_boxes = document.querySelectorAll(".examBox");
+    for (let box of exam_boxes) {
+        if (box.getElementsByTagName('h4')[0].textContent == class_title) {
+            return [box];
+        }
+    }
+}
 
 function handlebtntext(_class) {
     _case = getClassEnterbtn(_class);
@@ -62,13 +73,23 @@ function handlebtntext(_class) {
 };
 
 let myPort = browser.runtime.connect({name:"port-from-cs"});
-myPort.postMessage({greeting: "hello from content script"});
+console.log("content script restarting");
+myPort.postMessage({_status: "start"});
 
 myPort.onMessage.addListener(function(m) {
-  console.log("In content script, received message from background script: ");
-  console.log(m.greeting);
-});
-
-document.body.addEventListener("click", function() {
-  myPort.postMessage({greeting: "they clicked the page!"});
-});
+    console.log(`bs: selected class is ${m.selected_class}`);
+    console.log(selected);
+    if (m.selected_class == undefined) {
+        console.log("start selecting");
+        let exam_boxes = document.querySelectorAll(".examBox");
+        addCustomButtons(exam_boxes, "red");
+        sendSelectedClass();
+    } else if (selected == false) {
+        let exam_boxes = getClassexamBox(m.selected_class);
+        addCustomButtons(exam_boxes, "green");
+        
+    } else {
+        console.log("already selected");
+        console.log("handle this");
+    }
+})
