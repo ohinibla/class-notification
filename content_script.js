@@ -9,9 +9,10 @@ function addCustomButtons(exam_boxes, _color) {
         CustomButton.classList.add("notification-button");
         CustomButton.classList.add("btn", "examBtn", "contentBtn");
         CustomButton.style.backgroundColor = _color;
-        CustomButton.textContent = "ورود استاد را به من اطلاع بده";
+        CustomButton.textContent = "به من اطلاع بده";
         box.getElementsByClassName("btnHolder")[0].prepend(CustomButton);
     }
+    sendSelectedClass();
 }
 
 /**
@@ -49,7 +50,7 @@ function sendSelectedClass() {
  * by class title.
  */
 function getClassEnterbtn(class_title) {
-    return document.getElementsByClassName("selected-class")[0].parentNode.lastElementChild.textContent;
+    return document.getElementsByClassName("notification-button")[0].parentNode.lastElementChild.textContent;
 };
 
 function getClassexamBox(class_title) {
@@ -61,6 +62,24 @@ function getClassexamBox(class_title) {
     }
 }
 
+function get_undo_classes() {
+    let classes = [];
+    for (let box of document.querySelectorAll(".examBox")) {
+        if (box.getElementsByClassName("btnHolder")[0].lastElementChild.textContent != "زمان جلسه پایان یافته") {
+            classes.push(box);
+        }
+    }
+    return classes;
+}
+
+function addShakeCSS() {
+    let shakeURL = browser.extension.getURL("shake.css");
+    let _link = document.createElement('link');
+    _link.setAttribute('rel', 'stylesheet');
+    _link.setAttribute('href', shakeURL);
+    document.head.appendChild(_link);
+}
+
 function handlebtntext(_class) {
     _case = getClassEnterbtn(_class);
     if (_case == "زمان جلسه پایان یافته") {
@@ -69,27 +88,29 @@ function handlebtntext(_class) {
         setTimeout((function () {location.reload()}), 6000);
     } else if (_case == "ورود دانشجو") {
         console.log("BUZZZZZ!!!!");
+        addShakeCSS();
     }
 };
 
 let myPort = browser.runtime.connect({name:"port-from-cs"});
 console.log("content script restarting");
-myPort.postMessage({_status: "start"});
+myPort.postMessage({});
 
 myPort.onMessage.addListener(function(m) {
     console.log(`bs: selected class is ${m.selected_class}`);
-    console.log(selected);
+    console.log(`selected status: ${selected}`);
     if (m.selected_class == undefined) {
         console.log("start selecting");
-        let exam_boxes = document.querySelectorAll(".examBox");
+        let exam_boxes = get_undo_classes();
         addCustomButtons(exam_boxes, "red");
-        sendSelectedClass();
     } else if (selected == false) {
         let exam_boxes = getClassexamBox(m.selected_class);
         addCustomButtons(exam_boxes, "green");
+        handlebtntext(m.selected_class);
         
     } else {
         console.log("already selected");
         console.log("handle this");
+        handlebtntext(m.selected_class);
     }
 })
