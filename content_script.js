@@ -1,4 +1,4 @@
-var selected = false;
+var _selected = false;
 
 /**
  * Adds custom notification button to every examBox > BtnHolder.
@@ -35,18 +35,23 @@ function selectbtn(e) {
  */
 function sendSelectedClass() {
     document.querySelectorAll(".notification-button").forEach(item => {
-        item.addEventListener("click", (e) => {
-            let selected_class_box = e.target.parentNode.parentNode;
-            let selected_class_title = selected_class_box.getElementsByTagName('h4')[0].textContent;
-            myPort.postMessage({selected_class: selected_class_title, selected: true});
-            selectbtn(e);
-            selected = true;
-        })
+        item.addEventListener("click", sendSelectedClassMessage)
     })
-};
+}
 
 /**
- * Get class status (زمان جلسه پایان یافته, زمان جلسه فرا نرسیده, ورود دانشجو)
+ send selected button class title with a selected status flag to
+ * the background script to handle.
+*/
+function sendSelectedClassMessage(e) {
+    let selected_class_box = e.target.parentNode.parentNode;
+    let selected_class_title = selected_class_box.getElementsByTagName('h4')[0].textContent;
+    _selected = true;
+    myPort.postMessage({selected_class: selected_class_title, selected: _selected});
+    selectbtn(e);
+}
+
+/** Get class status (زمان جلسه پایان یافته, زمان جلسه فرا نرسیده, ورود دانشجو)
  * by class title.
  */
 function getClassEnterbtn(class_title) {
@@ -81,15 +86,18 @@ function addShakeCSS() {
 }
 
 function handlebtntext(_class) {
+    let enter = false;
     _case = getClassEnterbtn(_class);
     if (_case == "زمان جلسه پایان یافته") {
         console.log("DUE BUZZZZZ!!!");
     } else if (_case == "زمان جلسه فرا نرسیده") {
-        setTimeout((function () {location.reload()}), 6000);
+        setTimeout((function () {location.reload()}), 60000);
     } else if (_case == "ورود دانشجو") {
         console.log("BUZZZZZ!!!!");
         addShakeCSS();
-    }
+        found = true;
+    };
+    return enter;
 };
 
 let myPort = browser.runtime.connect({name:"port-from-cs"});
@@ -98,19 +106,19 @@ myPort.postMessage({});
 
 myPort.onMessage.addListener(function(m) {
     console.log(`bs: selected class is ${m.selected_class}`);
-    console.log(`selected status: ${selected}`);
+    console.log(`selected status: ${_selected}`);
     if (m.selected_class == undefined) {
         console.log("start selecting");
         let exam_boxes = get_undo_classes();
         addCustomButtons(exam_boxes, "red");
-    } else if (selected == false) {
+    } else if (m.selected_class !== undefined && _selected == false) {
         let exam_boxes = getClassexamBox(m.selected_class);
         addCustomButtons(exam_boxes, "green");
         handlebtntext(m.selected_class);
-        
-    } else {
+    } else if (m.selected_class !== undefined && _selected == true) { 
         console.log("already selected");
         console.log("handle this");
-        handlebtntext(m.selected_class);
+        let enter = handlebtntext(m.selected_class);
+        console.log(`found enter: ${enter}`);
     }
 })

@@ -14,4 +14,3 @@ function connected(p) {
 }
 
 browser.runtime.onConnect.addListener(connected);
-

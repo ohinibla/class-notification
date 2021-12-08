@@ -16,6 +16,11 @@
     "background": {
       "scripts": ["background-script.js"]
     },
+    
+    "browser_action": {
+        "default_icon": "icons/uninoti-48.png",
+       " default_title": "uninoti"
+    },
 
     "content_scripts": [
       {
