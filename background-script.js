@@ -6,10 +6,12 @@ function connected(p) {
   portFromCS = p;
   portFromCS.onMessage.addListener(function(m) {
   console.log(m);
-    if (m.selected_class != undefined) {
-      ClassWatchList = m.selected_class;
-    }
-    portFromCS.postMessage({selected_class: ClassWatchList});
+      if (m.selected == "reset") {
+          ClassWatchList = undefined;
+      } else if (m.selected_class != undefined) {
+          ClassWatchList = m.selected_class;
+      }
+      portFromCS.postMessage({selected_class: ClassWatchList});
   });
 }
 

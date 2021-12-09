@@ -1,4 +1,5 @@
 var _selected = false;
+addFadeCSS();
 
 /**
  * Adds custom notification button to every examBox > BtnHolder.
@@ -24,7 +25,8 @@ function selectbtn(e) {
     e.target.classList.add("selected-class");
     document.querySelectorAll(".notification-button").forEach(item => {
         if (!item.classList.contains("selected-class")) {
-            item.remove();
+            item.style.opacity = "0";
+            setTimeout(function(){item.parentNode.removeChild(item);}, 1000);
         }
     })
 }
@@ -44,9 +46,17 @@ function sendSelectedClass() {
  * the background script to handle.
 */
 function sendSelectedClassMessage(e) {
-    let selected_class_box = e.target.parentNode.parentNode;
-    let selected_class_title = selected_class_box.getElementsByTagName('h4')[0].textContent;
-    _selected = true;
+    let selected_class_title;
+    let selected_class_box;
+
+    if (_selected == true) {
+        document.querySelector(".notification-button").remove();
+        _selected = "reset";
+    } else {
+        selected_class_box = e.target.parentNode.parentNode;
+        selected_class_title = selected_class_box.getElementsByTagName('h4')[0].textContent;
+        _selected = true;
+    }
     myPort.postMessage({selected_class: selected_class_title, selected: _selected});
     selectbtn(e);
 }
@@ -67,7 +77,7 @@ function getClassexamBox(class_title) {
     }
 }
 
-function get_undo_classes() {
+function get_undue_classes() {
     let classes = [];
     for (let box of document.querySelectorAll(".examBox")) {
         if (box.getElementsByClassName("btnHolder")[0].lastElementChild.textContent != "زمان جلسه پایان یافته") {
@@ -82,6 +92,14 @@ function addShakeCSS() {
     let _link = document.createElement('link');
     _link.setAttribute('rel', 'stylesheet');
     _link.setAttribute('href', shakeURL);
+    document.head.appendChild(_link);
+}
+
+function addFadeCSS() {
+    let fadeURL = browser.extension.getURL("fade.css");
+    let _link = document.createElement('link');
+    _link.setAttribute('rel', 'stylesheet');
+    _link.setAttribute('href', fadeURL);
     document.head.appendChild(_link);
 }
 
@@ -109,7 +127,7 @@ myPort.onMessage.addListener(function(m) {
     console.log(`selected status: ${_selected}`);
     if (m.selected_class == undefined) {
         console.log("start selecting");
-        let exam_boxes = get_undo_classes();
+        let exam_boxes = get_undue_classes();
         addCustomButtons(exam_boxes, "red");
     } else if (m.selected_class !== undefined && _selected == false) {
         let exam_boxes = getClassexamBox(m.selected_class);
