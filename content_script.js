@@ -1,4 +1,6 @@
 var _selected = false;
+var shakeURL = browser.runtime.getURL("shake.css");
+var clockIMG_URL = browser.runtime.getURL("icons/notification.png");
 addFadeCSS();
 
 /**
@@ -6,11 +8,16 @@ addFadeCSS();
  */
 function addCustomButtons(exam_boxes, _color) {
     for (let box of exam_boxes) {
-        let CustomButton = document.createElement("a");
-        CustomButton.classList.add("notification-button");
-        CustomButton.classList.add("btn", "examBtn", "contentBtn");
-        CustomButton.style.backgroundColor = _color;
+        let CustomButton = document.createElement("img");
+        /**
         CustomButton.textContent = "به من اطلاع بده";
+        CustomButton.classList.add("btn", "examBtn", "contentBtn");
+        **/
+        CustomButton.classList.add("notification-button");
+        CustomButton.setAttribute("src", clockIMG_URL);
+        CustomButton.setAttribute("height", "40");
+        CustomButton.style.marginLeft = "10px";
+        CustomButton.style.filter = _color;
         box.getElementsByClassName("btnHolder")[0].prepend(CustomButton);
     }
     sendSelectedClass();
@@ -21,12 +28,12 @@ function addCustomButtons(exam_boxes, _color) {
  * appropriate classes. 
  */
 function selectbtn(e) {
-    e.target.style.backgroundColor = "green";
+    e.target.style.filter = "none";
     e.target.classList.add("selected-class");
     document.querySelectorAll(".notification-button").forEach(item => {
         if (!item.classList.contains("selected-class")) {
             item.style.opacity = "0";
-            setTimeout(function(){item.parentNode.removeChild(item);}, 1000);
+            setTimeout(function(){item.parentNode.removeChild(item);}, 50);
         }
     })
 }
@@ -88,7 +95,6 @@ function get_undue_classes() {
 }
 
 function addShakeCSS() {
-    let shakeURL = browser.extension.getURL("shake.css");
     let _link = document.createElement('link');
     _link.setAttribute('rel', 'stylesheet');
     _link.setAttribute('href', shakeURL);
@@ -96,7 +102,7 @@ function addShakeCSS() {
 }
 
 function addFadeCSS() {
-    let fadeURL = browser.extension.getURL("fade.css");
+    let fadeURL = browser.runtime.getURL("fade.css");
     let _link = document.createElement('link');
     _link.setAttribute('rel', 'stylesheet');
     _link.setAttribute('href', fadeURL);
@@ -104,7 +110,7 @@ function addFadeCSS() {
 }
 
 function handlebtntext(_class) {
-    let enter = false;
+    let pass = false;
     _case = getClassEnterbtn(_class);
     if (_case == "زمان جلسه پایان یافته") {
         console.log("DUE BUZZZZZ!!!");
@@ -113,9 +119,10 @@ function handlebtntext(_class) {
     } else if (_case == "ورود دانشجو") {
         console.log("BUZZZZZ!!!!");
         addShakeCSS();
-        found = true;
+        pass = true;
+        myPort.postMessage({pass: true});
     };
-    return enter;
+    return pass;
 };
 
 let myPort = browser.runtime.connect({name:"port-from-cs"});
@@ -127,16 +134,14 @@ myPort.onMessage.addListener(function(m) {
     console.log(`selected status: ${_selected}`);
     if (m.selected_class == undefined) {
         console.log("start selecting");
-        let exam_boxes = get_undue_classes();
-        addCustomButtons(exam_boxes, "red");
+        addCustomButtons(get_undue_classes(),"grayscale(100%)");
     } else if (m.selected_class !== undefined && _selected == false) {
-        let exam_boxes = getClassexamBox(m.selected_class);
-        addCustomButtons(exam_boxes, "green");
+        addCustomButtons(getClassexamBox(m.selected_class),"none");
         handlebtntext(m.selected_class);
     } else if (m.selected_class !== undefined && _selected == true) { 
         console.log("already selected");
         console.log("handle this");
-        let enter = handlebtntext(m.selected_class);
-        console.log(`found enter: ${enter}`);
+        let pass =  handlebtntext(m.selected_class);
+        console.log(`found enter: ${pass}`);
     }
 })

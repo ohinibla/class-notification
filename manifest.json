@@ -6,7 +6,7 @@
     "version": "1.0",
     "homepage_url": "https://github.com/ohinibla/UniNoti.git",
     "icons": {
-      "48": "icons/uninoti-48.png"
+      "48": "icons/notification.png"
     },
 
     "permissions": [
@@ -18,7 +18,7 @@
     },
     
     "browser_action": {
-        "default_icon": "icons/uninoti-48.png",
+        "default_icon": "icons/notification.png",
        " default_title": "uninoti"
     },
 
