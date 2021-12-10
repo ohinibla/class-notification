@@ -1,0 +1,28 @@
+html, body {
+    width: 100%;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+}
+
+#power-button-container {
+    height: 50px;
+    width: 100px;
+    margin: 20px;
+    border-radius: 25%;
+    background-color: #f26674;
+}
+
+#power-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: #f3f5f9;
+    margin: 5px 5px;
+    position: absolute;
+    left: none;
+    transition: all 300ms ease;
+}
+
