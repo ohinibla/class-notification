@@ -19,7 +19,9 @@
     
     "browser_action": {
         "default_icon": "icons/notification.png",
-       " default_title": "uninoti"
+        "default_title": "uninoti",
+        "default_popup": "popup/popup.html",
+        "browser_style": true
     },
 
     "content_scripts": [
