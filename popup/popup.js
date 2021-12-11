@@ -1,14 +1,15 @@
 let popup_port = browser.runtime.connect({name:"port-from-popup"});
-let power_stat = "off";
 console.log("popup script starting");
+var power_stat; 
 popup_port.postMessage({});
 
 popup_port.onMessage.addListener(function(m) {
-    console.log(`power status: ${m.power}`);
-    if (m.power) {
+    power_stat = m.power;
+    console.log(`power status: ${power_stat}`);
+    if (m.power == "off") {
         document.getElementById("power-button").style.left = "20px";
         document.getElementById("power-button-container").style.backgroundColor = "#f26674";
-    } else {
+    } else if (m.power == "on") {
         document.getElementById("power-button").style.left = "70px";
         document.getElementById("power-button-container").style.backgroundColor = "#a0d468";
     }

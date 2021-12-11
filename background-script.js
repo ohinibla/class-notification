@@ -33,19 +33,24 @@ function connected(p) {
         console.log(`registered status: ${registered}`);
         console.log("receiving messages from popup");
         console.log(`BS _power status: ${_power}`);
-        p.postMessage({power:_power});
         p.onMessage.addListener(function(m) {
-            _power = m.power;
             if (m.power == "on") {
                 register();
                 browser.tabs.executeScript(null, {file: "content_script.js"});
                 p.postMessage({selected_class: ClassWatchList})
+                _power = m.power;
             } else if (m.power == "off") {
                 console.log(`registered status: ${registered}`);
                 registered.unregister();
                 registered = null;
                 browser.tabs.executeScript(null, {file: "content_script_reset.js"});
-            }
+                ClassWatchList = undefined;
+                _power = m.power;
+            };
+        p.postMessage({
+            power:_power,
+            selected_class: ClassWatchList
+        });
         })
     }
 }
