@@ -83,8 +83,14 @@
      * by class title.
      */
     function getClassEnterbtn(class_title) {
-        return document.getElementsByClassName("notification-button")[0].parentNode.lastElementChild.textContent;
-    };
+        let enter_text;
+        document.querySelectorAll(".examBox").forEach(box => {
+            if (box.getElementsByTagName('h4')[0].textContent == class_title) {
+                enter_text = box.getElementsByClassName("btnHolder")[0].lastElementChild.innerText;
+            }
+        })
+        return enter_text;
+    }
 
     function getClassexamBox(class_title) {
         let exam_boxes = document.querySelectorAll(".examBox");
@@ -121,14 +127,19 @@
     }
 
     function handlebtntext(_class) {
+        console.log("handling this");
         let pass = false;
+        console.log(`class is: ${_class}`);
         _case = getClassEnterbtn(_class);
+        console.log(`class enter button is: ${_case}`);
         if (_case == "زمان جلسه پایان یافته") {
             console.log("DUE BUZZZZZ!!!");
         } else if (_case == "زمان جلسه فرا نرسیده") {
+            console.log("fara nareside");
             setTimeout((function () {location.reload()}), 60000);
         } else if (_case == "ورود دانشجو") {
             console.log("BUZZZZZ!!!!");
+            document.getElementsByClassName("selected-class")[0].classList.add("class-enter");
             addShakeCSS();
             pass = true;
             myPort.postMessage({pass: true});

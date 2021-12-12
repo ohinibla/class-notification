@@ -45,6 +45,7 @@ function connected(p) {
                 registered = null;
                 browser.tabs.executeScript(null, {file: "content_script_reset.js"});
                 ClassWatchList = undefined;
+                audio.pause();
                 _power = m.power;
             };
         p.postMessage({
