@@ -3,17 +3,29 @@ html, body {
     height: 300px;
 }
 
+body {
+    text-align: center;
+    font:1em/1.4 sans-serif;
+    background-image: radial-gradient( circle 588px at 31.7% 40.2%,  rgba(225,200,239,1) 21.4%, rgba(163,225,233,1) 57.1% );
+}
+
+h3 {
+    text-align: center;
+}
+
 div {
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 #power-button-container {
     height: 50px;
     width: 100px;
-    margin: 0 auto;
-    border-radius: 25%;
-    background-color: #f26674;
+    margin: 60% auto 30%;
+    border-radius: 2em;
+    /* background-color: #f26674; */
+    background-color: darkgray;
 }
 
 #power-button {
@@ -23,6 +35,16 @@ div {
     background-color: #f3f5f9;
     margin: 5px 5px;
     position: absolute;
-    transition: all 300ms ease;
+    transition: all 200ms ease;
+}
+
+.footer img {
+    vertical-align: middle;
+    margin-bottom: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
