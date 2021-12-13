@@ -135,7 +135,8 @@
         if (_case == "زمان جلسه پایان یافته") {
             console.log("DUE BUZZZZZ!!!");
         } else if (_case == "زمان جلسه فرا نرسیده") {
-            console.log("fara nareside");
+            pass = true;
+            myPort.postMessage({pass: true});
             setTimeout((function () {location.reload()}), 60000);
         } else if (_case == "ورود دانشجو") {
             console.log("BUZZZZZ!!!!");
