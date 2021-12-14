@@ -1,6 +1,7 @@
 var ClassWatchList;
 var chosen_alarm = "bell1";
-/** var audio = new Audio(browser.runtime.getURL("sounds/"+chosen_alarm+".wav")); */
+var audio = document.createElement("audio");
+audio.src = browser.runtime.getURL("sounds/"+chosen_alarm+".wav");
 var content_script_URL = browser.runtime.getURL("content_script"); 
 var registered = null
 var _power = "off";
@@ -14,9 +15,9 @@ async function register() {
 }
 
 function connected(p) {
-	console.log(p);
-    var audio = new Audio(browser.runtime.getURL("sounds/"+chosen_alarm+".wav"));
+	console.log(`connected with port: ${p.name}`);
     console.log(`chosen alarm is: ${chosen_alarm}`);
+    console.log(audio);
     if (p.name == "port-from-cs") {
         p.onMessage.addListener(function(m) {
             console.log(m);
@@ -36,11 +37,11 @@ function connected(p) {
         console.log(`registered status: ${registered}`);
         console.log("receiving messages from popup");
         console.log(`BS _power status: ${_power}`);
-        var audio = new Audio(browser.runtime.getURL("sounds/"+chosen_alarm+".wav"));
         p.onMessage.addListener(function(m) {
             console.log(m);
             if (m.set_alarm == true) {
                 chosen_alarm = m.alarm;
+                audio.src = browser.runtime.getURL("sounds/"+chosen_alarm+".wav");
                 console.log(`changing alarm sound: ${chosen_alarm}`);
             }
             if (m.power == "on") {
@@ -59,7 +60,8 @@ function connected(p) {
             };
             p.postMessage({
                 power:_power,
-                selected_class: ClassWatchList
+                selected_class: ClassWatchList,
+                alarm: chosen_alarm
             })
         })
     }

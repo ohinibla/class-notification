@@ -6,6 +6,8 @@ popup_port.postMessage({});
 
 popup_port.onMessage.addListener(function(m) {
     power_stat = m.power;
+    console.log(m.alarm);
+    document.getElementById(m.alarm).checked = true;
     console.log(`power status: ${power_stat}`);
     if (m.power == "off") {
         document.getElementById("power-button").style.left = "50px";
@@ -68,5 +70,6 @@ function choose_alarm(e) {
     popup_port.postMessage({set_alarm: true, alarm: chosen_alarm});
     var audio = new Audio(browser.runtime.getURL("sounds/"+chosen_alarm+".wav"));
     audio.play();
+    e.target.checked = true;
     setTimeout(function(){audio.pause();}, 3000);
 }
