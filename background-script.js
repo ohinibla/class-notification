@@ -11,7 +11,7 @@ var _power = "off";
  * action */
 async function register() {
     registered = await browser.contentScripts.register({
-        matches: ["<all_urls>"],
+        matches: ["https://srbiau.daan.ir/session-list*"],
         js: [{file: "./content_script.js"}]
     });
     /** console.log("registed the script"); */
@@ -21,8 +21,9 @@ async function register() {
 function notify(class_title_notif) {
     browser.notifications.create({
         "type": "basic",
-        "iconUrl": browser.runtime.getURL("icons/bell.png"),
+        "iconUrl": browser.runtime.getURL("icons/bell-48.png"),
         "title": class_title_notif,
+        "imageUrl": browser.runtime.getURL("icons/bell-96.png"), 
         "message": "استاد وارد کلاس شده است"
     });
 }

@@ -6,12 +6,13 @@
     "version": "1.0",
     "homepage_url": "https://github.com/ohinibla/class-notification.git",
     "icons": {
-      "48": "icons/bell.png"
+      "48": "icons/bell-48.png",
+      "96": "icons/bell-96.png"
     },
 
     "permissions": [
       "notifications",
-      "<all_urls>"
+      "https://srbiau.daan.ir/session-list*"
     ],
 
     "background": {
@@ -19,7 +20,7 @@
     },
     
     "browser_action": {
-        "default_icon": "icons/notification.png",
+        "default_icon": "icons/bell-48.png",
         "default_title": "uninoti",
         "default_popup": "popup/popup.html",
         "browser_style": true
