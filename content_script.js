@@ -1,5 +1,6 @@
 (function() {
 
+    /** Since there is a power button, there is no need for this. */
     /**
     if (window.hasRun) {
         console.log("cut duplicate");
@@ -92,6 +93,7 @@
         return enter_text;
     }
 
+    /** get examBox (class title main container) by class title */
     function getClassexamBox(class_title) {
         let exam_boxes = document.querySelectorAll(".examBox");
         for (let box of exam_boxes) {
@@ -101,6 +103,7 @@
         }
     }
 
+    /** Return all the classes that are not due yet. */
     function get_undue_classes() {
         let classes = [];
         for (let box of document.querySelectorAll(".examBox")) {
@@ -111,6 +114,7 @@
         return classes;
     }
 
+    /** Shake animation to notification button. */
     function addShakeCSS() {
         let _link = document.createElement('link');
         _link.setAttribute('rel', 'stylesheet');
@@ -118,6 +122,8 @@
         document.head.appendChild(_link);
     }
 
+    /** Fade animation for notification buttons. (setting the animation duration 
+     * longer could cause unwanted behavior due to doube clicking. */
     function addFadeCSS() {
         let fadeURL = browser.runtime.getURL("fade.css");
         let _link = document.createElement('link');
@@ -126,6 +132,7 @@
         document.head.appendChild(_link);
     }
 
+    /** Make decision based on the enter button text */
     function handlebtntext(_class) {
         console.log("handling this");
         let pass = false;
