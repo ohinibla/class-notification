@@ -1,5 +1,5 @@
 let popup_port = browser.runtime.connect({name:"port-from-popup"});
-console.log("popup script starting");
+/** console.log("popup script starting"); */
 var power_stat; 
 popup_port.postMessage({});
 var power-button = document.getElementById("power-button").style.left = "50px";
@@ -7,9 +7,9 @@ var power-button-continer = document.getElementById("power-button-container").st
 
 popup_port.onMessage.addListener(function(m) {
     power_stat = m.power;
-    console.log(m.alarm);
+    /** console.log(m.alarm); */
     document.getElementById(m.alarm).checked = true;
-    console.log(`power status: ${power_stat}`);
+    /** console.log(`power status: ${power_stat}`); */
     if (m.power == "off") {
         power-button.style.left = "50px";
         power-button-container = style.backgroundColor = "darkgray";
@@ -70,7 +70,7 @@ function openCity(e) {
  * and play a preview */
 function choose_alarm(e) {
     let chosen_alarm = e.target.id;
-    console.log(browser.runtime.getURL("sounds/"+chosen_alarm))
+    /** console.log(browser.runtime.getURL("sounds/"+chosen_alarm)) */
     popup_port.postMessage({set_alarm: true, alarm: chosen_alarm});
     var audio = new Audio(browser.runtime.getURL("sounds/"+chosen_alarm+".wav"));
     audio.play();

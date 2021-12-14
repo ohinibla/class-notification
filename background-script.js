@@ -14,17 +14,17 @@ async function register() {
         matches: ["<all_urls>"],
         js: [{file: "./content_script.js"}]
     });
-    console.log("registed the script");
+    /** console.log("registed the script"); */
 }
 
 function connected(p) {
-	console.log(`connected with port: ${p.name}`);
-    console.log(`chosen alarm is: ${chosen_alarm}`);
-    console.log(audio);
+	/** console.log(`connected with port: ${p.name}`); */
+    /** console.log(`chosen alarm is: ${chosen_alarm}`); */
+    /** console.log(audio); */
     /** handle messages from content script */
     if (p.name == "port-from-cs") {
         p.onMessage.addListener(function(m) {
-            console.log(m);
+            /** console.log(m); */
             if (m.pass) {
                 audio.loop = true;
                 audio.play();
@@ -39,15 +39,15 @@ function connected(p) {
         })
     /** handle messages from popup */
     } else if (p.name == "port-from-popup") {
-        console.log(`registered status: ${registered}`);
-        console.log("receiving messages from popup");
-        console.log(`BS _power status: ${_power}`);
+        /** console.log(`registered status: ${registered}`); */
+        /** console.log("receiving messages from popup"); */
+        /** console.log(`BS _power status: ${_power}`); */
         p.onMessage.addListener(function(m) {
-            console.log(m);
+            /** console.log(m); */
             if (m.set_alarm == true) {
                 chosen_alarm = m.alarm;
                 audio.src = browser.runtime.getURL("sounds/"+chosen_alarm+".wav");
-                console.log(`changing alarm sound: ${chosen_alarm}`);
+                /** console.log(`changing alarm sound: ${chosen_alarm}`); */
             }
             if (m.power == "on") {
                 register();
@@ -55,7 +55,7 @@ function connected(p) {
                 p.postMessage({selected_class: ClassWatchList})
                 _power = m.power;
             } else if (m.power == "off") {
-                console.log(`registered status: ${registered}`);
+                /** console.log(`registered status: ${registered}`); */
                 registered.unregister();
                 registered = null;
                 /** just registering won't remove notification buttons */
@@ -76,4 +76,3 @@ function connected(p) {
 }
         
 browser.runtime.onConnect.addListener(connected);
-
