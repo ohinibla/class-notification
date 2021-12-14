@@ -10,8 +10,9 @@
     */
             
     var _selected = false;
-    var shakeURL = browser.runtime.getURL("shake.css");
-    var clockIMG_URL = browser.runtime.getURL("icons/notification.png");
+    var shakeURL = browser.runtime.getURL(".styles/shake.css");
+    var fadeURL = browser.runtime.getURL("./styles/fade.css");
+    var clockIMG_URL = browser.runtime.getURL("icons/bell.png");
     addFadeCSS();
 
     /**
@@ -30,7 +31,7 @@
             CustomButton.style.marginLeft = "10px";
             CustomButton.style.filter = _color;
             box.getElementsByClassName("btnHolder")[0].prepend(CustomButton);
-            console.log("custom buttons added");
+            /** console.log("custom buttons added"); */
         }
         sendSelectedClass();
     }
@@ -125,7 +126,6 @@
     /** Fade animation for notification buttons. (setting the animation duration 
      * longer could cause unwanted behavior due to doube clicking. */
     function addFadeCSS() {
-        let fadeURL = browser.runtime.getURL("fade.css");
         let _link = document.createElement('link');
         _link.setAttribute('rel', 'stylesheet');
         _link.setAttribute('href', fadeURL);
@@ -148,7 +148,7 @@
             document.getElementsByClassName("selected-class")[0].classList.add("class-enter");
             addShakeCSS();
             pass = true;
-            myPort.postMessage({pass: true});
+            myPort.postMessage({pass: true, selected_class: _class});
         };
         return pass;
     };

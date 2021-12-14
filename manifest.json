@@ -6,7 +6,7 @@
     "version": "1.0",
     "homepage_url": "https://github.com/ohinibla/class-notification.git",
     "icons": {
-      "48": "icons/notification.png"
+      "48": "icons/bell.png"
     },
 
     "permissions": [

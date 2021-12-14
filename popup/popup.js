@@ -2,8 +2,8 @@ let popup_port = browser.runtime.connect({name:"port-from-popup"});
 /** console.log("popup script starting"); */
 var power_stat; 
 popup_port.postMessage({});
-var power-button = document.getElementById("power-button").style.left = "50px";
-var power-button-continer = document.getElementById("power-button-container").style.backgroundColor = "darkgray";
+var _power_button = document.getElementById("power-button");
+var _power_button_container = document.getElementById("power-button-container");
 
 popup_port.onMessage.addListener(function(m) {
     power_stat = m.power;
@@ -11,11 +11,11 @@ popup_port.onMessage.addListener(function(m) {
     document.getElementById(m.alarm).checked = true;
     /** console.log(`power status: ${power_stat}`); */
     if (m.power == "off") {
-        power-button.style.left = "50px";
-        power-button-container = style.backgroundColor = "darkgray";
+        _power_button.style.left = "50px";
+        _power_button_container.style.backgroundColor = "darkgray";
     } else if (m.power == "on") {
-        power-button.style.left = "100px";
-        power-button-container.style.backgroundColor = "#57b45c";
+        _power_button.style.left = "100px";
+        _power_button_container.style.backgroundColor = "#57b45c";
     }
     document.getElementById("selected-class").textContent = m.selected_class;
 })
@@ -25,13 +25,13 @@ let power_button = document.getElementById("power-button-container");
 power_button.addEventListener("click", function() {
     if (power_stat == "off") {
         power_stat = "on";
-        power-button.style.left = "70px";
-        power-button-container.style.backgroundColor = "#57b45c";
+        _power_button.style.left = "70px";
+        _power_button_container.style.backgroundColor = "#57b45c";
         popup_port.postMessage({"power": power_stat});
     } else if (power_stat == "on") {
         power_stat = "off";
-        power-button.style.left = "20px";
-        power-button-container.style.backgroundColor = "darkgray";
+        _power_button.style.left = "20px";
+        _power_button_container.style.backgroundColor = "darkgray";
         popup_port.postMessage({"power": power_stat});
     }
 })

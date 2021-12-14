@@ -17,6 +17,16 @@ async function register() {
     /** console.log("registed the script"); */
 }
 
+/** make a notification */
+function notify(class_title_notif) {
+    browser.notifications.create({
+        "type": "basic",
+        "iconUrl": browser.runtime.getURL("icons/bell.png"),
+        "title": class_title_notif,
+        "message": "استاد وارد کلاس شده است"
+    });
+}
+
 function connected(p) {
 	/** console.log(`connected with port: ${p.name}`); */
     /** console.log(`chosen alarm is: ${chosen_alarm}`); */
@@ -28,6 +38,7 @@ function connected(p) {
             if (m.pass) {
                 audio.loop = true;
                 audio.play();
+                notify(m.selected_class);
                 return;
             } else if (m.selected == "reset") {
                 ClassWatchList = undefined;
