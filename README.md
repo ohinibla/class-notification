@@ -1,6 +1,6 @@
 # class notification
 
-**This add-on notifies users when the class is open to enter on daan.ir remote learning platform.
+* This add-on notifies users when the class is open to enter on daan.ir remote learning platform.
 
 ## What it does
 
