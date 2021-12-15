@@ -1,14 +1,5 @@
 (function() {
 
-    /** Since there is a power button, there is no need for this. */
-    /**
-    if (window.hasRun) {
-        console.log("cut duplicate");
-        return;
-    }
-    window.hasRun = true;
-    */
-            
     var _selected = false;
     var shakeURL = browser.runtime.getURL(".styles/shake.css");
     var fadeURL = browser.runtime.getURL("./styles/fade.css");
