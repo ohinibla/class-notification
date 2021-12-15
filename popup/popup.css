@@ -1,0 +1,102 @@
+html, body {
+    width: 200px;
+    height: 300px;
+}
+
+body {
+    text-align: center;
+    font:1em/1.4 sans-serif;
+    background-image: radial-gradient( circle 588px at 31.7% 40.2%,  rgba(225,200,239,1) 21.4%, rgba(163,225,233,1) 57.1% );
+    outline: none;
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#selected-class {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    
+}
+
+#power-button-container {
+    height: 50px;
+    width: 100px;
+    margin: 60px auto 20px;
+    border-radius: 2em;
+    background-color: darkgray;
+}
+
+#power-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: #f3f5f9;
+    margin: 5px 5px;
+    position: absolute;
+    transition: all 200ms ease;
+}
+
+.footer {
+    margin-top: 55px;
+}
+
+.footer img {
+    vertical-align: middle;
+    margin-bottom: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+ /* Style the tab */
+.tab {
+  overflow: hidden;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    text-align: center;
+    width: 100px;
+    background-color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: inherit;
+  font-weight: bold;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+}
+
+.radio-buttons {
+    text-align: left;
+    padding-left: 40px;
+    margin-bottom: 30px;
+}

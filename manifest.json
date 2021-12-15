@@ -1,24 +1,34 @@
 {
+
     "manifest_version": 2,
-    "name": "UniNotification",
-    "version": 1.0,
-    
-    "description": "class starting notification for daan.ir",
-    "homepage_url": "",
+    "name": "class notification",
+    "description": "basic start of a class notification for daan.ir",
+    "version": "1.0",
+    "homepage_url": "https://github.com/ohinibla/class-notification.git",
     "icons": {
-        "48": "icons/uninoti-48.png"
+      "48": "icons/bell-48.png",
+      "96": "icons/bell-96.png"
     },
-    
+
     "permissions": [
-        "activeTab"
+      "notifications",
+      "https://srbiau.daan.ir/session-list*"
     ],
 
-    "browser_action": {
-        "default_icon": "icons/uninoti-32.png",
-        "default_title": "UniNoti",
-        "default_popup": "popup/UniNoti.html"
+    "background": {
+      "scripts": ["background-script.js"]
     },
+<<<<<<< HEAD
 
     "web_accessible_resources": []
+=======
+    
+    "browser_action": {
+        "default_icon": "icons/bell-48.png",
+        "default_title": "uninoti",
+        "default_popup": "popup/popup.html",
+        "browser_style": true
+    }
+>>>>>>> experimental
 
 }

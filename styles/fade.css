@@ -1,0 +1,6 @@
+.notification-button {
+    opacity: 1;
+    -webkit-transition: opacity 5000ms linear;
+    transition: opacity 5000ms linear;
+    cursor: pointer;
+}
