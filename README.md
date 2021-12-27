@@ -12,8 +12,9 @@ This extension includes:
 
 * a background script to handle messages and preserve selected class / options.
 * two content scripts, "content_script.js" and "content_script_reset.js", that is injected into
-https://srbiau.daa.ir/session-list pages.
+https://*.daa.ir/session-list pages.
 * a browser action action script, "popup.js" to handle browser actions button for turning the notification
 listener on or off, and selecting various sounds for notification alarm.
 * cuple of sounds, images and stylesheet pages.
 
+download the extension for firefox at: https://addons.mozilla.org/en-US/firefox/addon/daan-ir-class-ready-alarm/
