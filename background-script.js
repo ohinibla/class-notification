@@ -22,10 +22,10 @@ function notify(class_title_notif) {
     browser.notifications.create({
         "type": "basic",
         "iconUrl": browser.runtime.getURL("icons/bell-48.png"),
-        "title": class_title_notif,
+        "title": "class notification",
         "imageUrl": browser.runtime.getURL("icons/bell-96.png"), 
-        "message": "استاد وارد کلاس شده است"
-    });
+        "message": "\n" + class_title_notif + "\n" + "!استاد وارد کلاس شده است"
+        });
 }
 
 function connected(p) {
