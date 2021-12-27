@@ -156,6 +156,7 @@
             addCustomButtons(get_undue_classes(),"grayscale(100%)");
         } else if (m.selected_class !== undefined && _selected == false) {
             addCustomButtons(getClassexamBox(m.selected_class),"none");
+            document.getElementsByClassName("notification-button")[0].click();
             handlebtntext(m.selected_class);
         } else if (m.selected_class !== undefined && _selected == true) { 
             /** console.log("already selected"); */
