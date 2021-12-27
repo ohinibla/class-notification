@@ -1,7 +1,7 @@
 (function() {
 
     var _selected = false;
-    var shakeURL = browser.runtime.getURL(".styles/shake.css");
+    var shakeURL = browser.runtime.getURL("./styles/shake.css");
     var fadeURL = browser.runtime.getURL("./styles/fade.css");
     var clockIMG_URL = browser.runtime.getURL("icons/bell-96.png");
     addFadeCSS();
