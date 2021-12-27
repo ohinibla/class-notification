@@ -11,7 +11,7 @@ var _power = "off";
  * action */
 async function register() {
     registered = await browser.contentScripts.register({
-        matches: ["https://srbiau.daan.ir/session-list*"],
+        matches: ["https://*.daan.ir/session-list*"],
         js: [{file: "./content_script.js"}]
     });
     /** console.log("registed the script"); */

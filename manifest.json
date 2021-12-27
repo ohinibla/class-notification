@@ -12,7 +12,7 @@
 
     "permissions": [
       "notifications",
-      "https://srbiau.daan.ir/session-list*"
+      "https://*.daan.ir/session-list*"
     ],
 
     "background": {
