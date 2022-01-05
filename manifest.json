@@ -12,7 +12,7 @@
 
     "permissions": [
       "notifications",
-      "https://*.daan.ir/session-list*"
+      "https://*.daan.ir/*"
     ],
 
     "background": {

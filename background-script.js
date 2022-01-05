@@ -11,7 +11,7 @@ var _power = "off";
  * action */
 async function register() {
     registered = await browser.contentScripts.register({
-        matches: ["https://*.daan.ir/session-list*"],
+        matches: ["https://*.daan.ir/*"],
         js: [{file: "./content_script.js"}]
     });
     /** console.log("registed the script"); */
@@ -35,8 +35,9 @@ function connected(p) {
     /** handle messages from content script */
     if (p.name == "port-from-cs") {
         p.onMessage.addListener(function(m) {
-            /** console.log(m); */
-            if (m.pass) {
+            console.log(m);
+            if (m.enter_pass) {
+				browser.tabs.goBack();
                 audio.loop = true;
                 audio.play();
                 notify(m.selected_class);

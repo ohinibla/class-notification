@@ -122,24 +122,25 @@
 
     /** Make decision based on the enter button text */
     function handlebtntext(_class) {
-        /** console.log("handling this"); */
-        let pass = false;
-        /** console.log(`class is: ${_class}`); */
-        enter_btn = getClassEnterbtn(_class)[0];
-        _case = enter_btn.innerText;
-        /** console.log(`class enter button is: ${_case}`); */
-        if (_case == "زمان جلسه پایان یافته") {
-            /** console.log("DUE BUZZZZZ!!!"); */
-        } else if (_case == "زمان جلسه فرا نرسیده") {
-            setTimeout((function () {location.reload()}), 60000);
-        } else if (_case == "ورود دانشجو") {
-            /** console.log("BUZZZZZ!!!!"); */
-            document.getElementsByClassName("selected-class")[0].classList.add("class-enter");
-            addShakeCSS();
-            pass = true;
-            myPort.postMessage({pass: true, selected_class: _class});
-        };
-        return pass;
+		/** console.log("handling this"); */
+		/** console.log(`class is: ${_class}`); */
+		enter_btn = getClassEnterbtn(_class)[0];
+		_case = enter_btn.innerText;
+		/** console.log(`class enter button is: ${_case}`); */
+		if (_case == "زمان جلسه پایان یافته") {
+			/** console.log("DUE BUZZZZZ!!!"); */
+		} else if (_case == "زمان جلسه فرا نرسیده") {
+			setTimeout((function () {location.reload()}), 60000);
+		} else if (_case == "ورود دانشجو") {
+			/** console.log("BUZZZZZ!!!!"); */
+			setTimeout(function(){enter_btn.click()}, 10000);
+			/**
+			document.getElementsByClassName("selected-class")[0].classList.add("class-enter");
+			addShakeCSS();
+			pass = true;
+			myPort.postMessage({pass: true, selected_class: _class});
+			*/
+		}
     };
 
     let myPort = browser.runtime.connect({name:"port-from-cs"});
@@ -149,6 +150,10 @@
     myPort.onMessage.addListener(function(m) {
         /** console.log(`bs: selected class is ${m.selected_class}`); */
         /** console.log(`selected status: ${_selected}`); */
+		if (window.location.href != "https://srbiau.daan.ir/session-list") {
+			window.history.go(-1);
+			return;
+		}
         if (m.selected_class == undefined) {
             /** console.log("start selecting"); */
             addCustomButtons(get_undue_classes(),"grayscale(100%)");
