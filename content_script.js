@@ -76,13 +76,10 @@
      * by class title.
      */
     function getClassEnterbtn(class_title) {
-        let enter_text;
-        document.querySelectorAll(".examBox").forEach(box => {
-            if (box.getElementsByTagName('h4')[0].textContent == class_title) {
-                enter_text = box.getElementsByClassName("btnHolder")[0].lastElementChild.innerText;
-            }
-        })
-        return enter_text;
+        let exb_btn_holdr = getClassexamBox(class_title)[0].querySelectorAll(".btnHolder")[0]
+        b = exb_btn_holdr.getElementsByTagName("button")[0];
+        c = exb_btn_holdr.getElementsByClassName("disableBtn")[0];
+        return [b || c]
     }
 
     /** get examBox (class title main container) by class title */
@@ -128,7 +125,8 @@
         /** console.log("handling this"); */
         let pass = false;
         /** console.log(`class is: ${_class}`); */
-        _case = getClassEnterbtn(_class);
+        enter_btn = getClassEnterbtn(_class)[0];
+        _case = enter_btn.innerText;
         /** console.log(`class enter button is: ${_case}`); */
         if (_case == "زمان جلسه پایان یافته") {
             /** console.log("DUE BUZZZZZ!!!"); */
